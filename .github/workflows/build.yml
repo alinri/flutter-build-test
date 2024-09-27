@@ -1,0 +1,32 @@
+name: Build project
+
+on:
+    release:
+        types: [published]
+    workflow_dispatch: 
+
+jobs:
+    build:
+        runs-on: macos-latest
+        steps:
+            - name: Setup flutter SDK
+              uses: flutter-actions/setup-flutter@v3
+              with:
+                  channel: stable
+                  version: 3.24.3
+            - name: Install dependencies
+              run: flutter pub get
+            - name: build ipa
+              run: flutter build ios --release
+            - run: mkdir Payload
+            - run: cp build/ios/iphoneos/Runner.app Payload/
+            - run: zip -r Payload.zip Payload
+            - run: mv Payload.zip release.ipa
+            - name: realse
+              run:
+                gh release upload ${{github.event.release.tag_name}} release.ipa
+              env:
+                GITHUB_TOKEN: ${{github.token}}
+              shell: bash
+
+            
