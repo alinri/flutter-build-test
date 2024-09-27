@@ -9,6 +9,7 @@ jobs:
     build:
         runs-on: macos-latest
         steps:
+            - run: ls
             - name: Setup flutter SDK
               uses: flutter-actions/setup-flutter@v3
               with:
