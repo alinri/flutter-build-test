@@ -20,12 +20,12 @@ jobs:
             - name: Install dependencies
               run: flutter pub get
             - name: build ipa
-              run: flutter build ios --release --no-codesign
-            - run: mkdir Payload
-            - run: cp build/ios/iphoneos/Runner.app Payload/
-            - run: zip -r Payload.zip Payload
+              run: flutter build ipa --release --no-codesign
+            # - run: mkdir Payload
+            # - run: cp build/ios/iphoneos/Runner.app Payload/
+            # - run: zip -r Payload.zip Payload
             - run: mv Payload.zip release.ipa
-            - name: realse
+            - name: release
               run:
                 gh release upload ${{github.event.release.tag_name}} release.ipa
               env:
