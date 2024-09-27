@@ -20,7 +20,7 @@ jobs:
             - name: Install dependencies
               run: flutter pub get
             - name: build ipa
-              run: flutter build ios --release
+              run: flutter build ios --release --no-codesign
             - run: mkdir Payload
             - run: cp build/ios/iphoneos/Runner.app Payload/
             - run: zip -r Payload.zip Payload
